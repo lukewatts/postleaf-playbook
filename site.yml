@@ -1,0 +1,15 @@
+- name: Postleaf playbook
+  hosts: 127.0.0.1
+  become: yes
+
+  vars:
+    current_user: ubuntu
+    app_url: http://52.215.88.137
+    app_port: 3000
+    auth_secret: random_string
+
+  roles:
+    - common
+    - nodejs
+    - nginx
+    - postleaf

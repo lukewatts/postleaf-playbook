@@ -1,0 +1,41 @@
+---
+- name: Clone Postleaf repo
+  git:
+    repo: https://github.com/Postleaf/postleaf.git
+    dest: /var/www/postleaf
+    version: 1.0.0-alpha.3
+
+- name: Clone Empower Theme
+  git:
+    repo: https://github.com/Postleaf/empower-theme.git
+    dest: /var/www/postleaf/themes/empower-theme
+
+- name: Copy .env.example to .env
+  template:
+    src: roles/postleaf/templates/.env.j2
+    dest: /var/www/postleaf/.env
+    owner: www-data
+    group: www-data
+    mode: 0644
+
+- name: Install npm dependencies
+  npm:
+    path: /var/www/postleaf
+    production: yes
+
+- name: Install pm2 globally
+  npm:
+    name: pm2
+    global: yes
+
+- name: Set /var/www/ permissions
+  command: |
+    chown -c -R "{{ current_user }}":www-data "{{ item }}"
+  register: chown_status
+  changed_when: chown_status.stdout != ""
+  with_items:
+    - /var/www/
+
+- name: pm2 start app.js
+  command: chdir=/var/www/postleaf pm2 start app.js
+

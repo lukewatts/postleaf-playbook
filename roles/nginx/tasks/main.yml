@@ -1,0 +1,17 @@
+---
+- name: Install Nginx
+  apt:
+    name: nginx
+  notify: start nginx
+
+- name: Set current user to www-data
+  user:
+    name: '{{ current_user }}'
+    append: yes
+    groups: www-data 
+
+- name: Copy default to sites-available 
+  template:
+    src: roles/nginx/templates/default.j2
+    dest: /etc/nginx/sites-available/default
+  notify: restart nginx

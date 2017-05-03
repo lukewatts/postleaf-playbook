@@ -1,0 +1,18 @@
+server {
+  listen 80;
+  server_name {{ app_url|regex_replace('^http://', '') }};
+#  root /var/www/postleaf;
+
+ # Max upload size for proxy
+  client_max_body_size 100m;
+
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_pass http://localhost:{{ app_port }}/;
+    proxy_set_header Host $http_host;
+    proxy_cache_bypass $http_upgrade;
+    proxy_redirect off;
+  }
+}

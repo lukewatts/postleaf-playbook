@@ -1,0 +1,11 @@
+- name: Install git
+  apt:
+    name: git      
+
+- name: Install SQLite3
+  apt:
+    name: sqlite3
+
+- name: Install GraphicsMagick
+  apt:
+    name: graphicsmagick
