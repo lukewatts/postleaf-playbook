@@ -1,12 +1,14 @@
-- name: Postleaf playbook
+- name: Postleaf playbook v0.0.2
   hosts: 127.0.0.1
   become: yes
 
   vars:
     current_user: ubuntu
-    app_url: http://52.215.88.137
+    # !!! Don't add a trailing slash to the app_url !!!
+    app_url: http://domain-or-ip-address
     app_port: 3000
-    auth_secret: random_string
+    # You can generate a uuid with `echo $(uuidgen)`
+    auth_secret: random_string 
 
   roles:
     - common

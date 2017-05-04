@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name {{ app_url|regex_replace('^http://', '') }};
+  server_name {{ app_url|regex_replace('^https?://', '') }};
 #  root /var/www/postleaf;
 
  # Max upload size for proxy

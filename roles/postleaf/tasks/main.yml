@@ -37,5 +37,5 @@
     - /var/www/
 
 - name: pm2 start app.js
-  command: chdir=/var/www/postleaf pm2 start app.js
+  command: chdir=/var/www/postleaf pm2 start app.js --force
 
